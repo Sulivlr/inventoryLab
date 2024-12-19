@@ -17,6 +17,38 @@ categoriesRouter.get('/', async (req, res, next) => {
   }
 });
 
+categoriesRouter.get('/:id', async (req, res, next) => {
+  try {
+    const connection = mysqlDb.getConnection();
+    const id = req.params.id;
+    const result = await connection.query('SELECT * FROM category WHERE id = ?', [id]);
+    const category = result[0] as Category[];
+    if (category.length === 0) {
+      res.status(404).send({error: `No category`});
+    }
+    res.send(category[0]);
+  } catch (error) {
+    next(error);
+  }
+});
+
+categoriesRouter.delete('/:id', async (req, res, next) => {
+  try {
+    const connection = mysqlDb.getConnection();
+    const id = req.params.id;
+    const result = await connection.query('SELECT * FROM category WHERE id = ?', [id]);
+    const category = result[0] as Category[];
+    if (category.length === 0) {
+      res.status(404).send({error: `No category`});
+    }
+    const deletedResult = await connection.query('DELETE FROM category WHERE id = ?', [id]);
+    res.send(deletedResult[0]);
+
+  } catch (error) {
+    next(error);
+  }
+});
+
 categoriesRouter.post('/', async (req, res, next) => {
   try {
     if (!req.body.title) {

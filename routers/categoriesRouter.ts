@@ -5,7 +5,7 @@ import {ResultSetHeader} from 'mysql2';
 
 const categoriesRouter = express.Router();
 
-categoriesRouter.get('/', async (req, res, next) => {
+categoriesRouter.get('/', async (_req, res, next) => {
   try {
 
     const connection = mysqlDb.getConnection();

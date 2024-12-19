@@ -5,6 +5,18 @@ import {ResultSetHeader} from 'mysql2';
 
 const categoriesRouter = express.Router();
 
+categoriesRouter.get('/', async (req, res, next) => {
+  try {
+
+    const connection = mysqlDb.getConnection();
+    const result = await connection.query('SELECT * FROM category');
+    const categories = result[0] as Category[];
+    res.send(categories);
+  } catch (error) {
+    next(error);
+  }
+});
+
 categoriesRouter.post('/', async (req, res, next) => {
   try {
     if (!req.body.title) {

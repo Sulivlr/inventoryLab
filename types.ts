@@ -19,3 +19,21 @@ export interface Place {
   title: string;
   description: string;
 }
+
+export interface ItemsMutation {
+  categoryId: number;
+  placeId: number;
+  title: string;
+  description: string;
+  image: string | null;
+}
+
+export interface Item {
+  id: number;
+  categoryId: number;
+  placeId: number;
+  title: string;
+  description: string;
+  image: string | null;
+  created_at: string;
+}
